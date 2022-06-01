@@ -82,7 +82,7 @@ public class CalculadoraServerSocket {
 	            		System.out.println("Fim!");
 	            		return;
 	            	case "y":
-	            		ParseYAML("formula.yaml");
+	            		a = ParseYAML("formula.yaml");
 	            		break;
 	            	case "x":
 	            		a = ParseXML("formula.xml");
@@ -137,18 +137,16 @@ public class CalculadoraServerSocket {
 			if (map == null || map.isEmpty() == true) {
 	            throw new RuntimeException("Leitura do arquivo falhou.");
 	        }
-			System.out.println(map.get("operands"));
-			System.out.println(map.get("operations"));
-//			ArrayList<Integer> operandList = map.get("operands");
-//			ArrayList<String> operationList = map.get("operations");
-//			StringBuilder operation = new StringBuilder();
-//			for(int i = 0; i < operandList.size(); i++) {
-//				operation.append(operandList.get(i));
-//				if (operationList.size() > i) {
-//					operation.append(operationList.get(i));
-//				}
-//			}
-//			return operation.toString();
+			ArrayList operandList = (ArrayList) map.get("operands");
+			ArrayList operationList = (ArrayList) map.get("operations");
+			StringBuilder operation = new StringBuilder();
+			for(int i = 0; i < operandList.size(); i++) {
+				operation.append(operandList.get(i));
+				if (operationList.size() > i) {
+					operation.append(operationList.get(i));
+				}
+			}
+			return operation.toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
