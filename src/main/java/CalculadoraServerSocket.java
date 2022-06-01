@@ -1,15 +1,13 @@
-package src;
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
+import org.yaml.snakeyaml.Yaml;
+
 import javax.xml.parsers.*;
 import java.io.*;
 
@@ -132,6 +130,29 @@ public class CalculadoraServerSocket {
 	}
 	
 	public static String ParseYAML(String fileName) {
+		Yaml yaml = new Yaml();
+		try {
+			InputStream stream = new FileInputStream(fileName);
+			Map map = (Map) yaml.load(stream);
+			if (map == null || map.isEmpty() == true) {
+	            throw new RuntimeException("Leitura do arquivo falhou.");
+	        }
+			System.out.println(map.get("operands"));
+			System.out.println(map.get("operations"));
+//			ArrayList<Integer> operandList = map.get("operands");
+//			ArrayList<String> operationList = map.get("operations");
+//			StringBuilder operation = new StringBuilder();
+//			for(int i = 0; i < operandList.size(); i++) {
+//				operation.append(operandList.get(i));
+//				if (operationList.size() > i) {
+//					operation.append(operationList.get(i));
+//				}
+//			}
+//			return operation.toString();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "";
 	}
 	

@@ -1,5 +1,3 @@
-package src;
-
 public class Node {
     public char value;
     public Node leftSon;
