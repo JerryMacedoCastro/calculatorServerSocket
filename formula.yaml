@@ -1,0 +1,12 @@
+formula:
+   operands:
+   -  operand: 5
+   -  operand: 3
+   -  operand: 8
+   -  operand: 5
+   -  operand: 9
+   operators:
+   -  operator: -
+   -  operador: /
+   -  operator: +
+   -  operator: *

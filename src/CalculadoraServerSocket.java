@@ -1,3 +1,4 @@
+package src;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -5,12 +6,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
 import java.util.Scanner;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.*;
+import java.io.*;
 
 public class CalculadoraServerSocket {
-
-	
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
@@ -64,29 +67,75 @@ public class CalculadoraServerSocket {
 	      */
 			String a = "";
 			Scanner sc = new Scanner(System.in);
-	        while (!a.equals("q"))
+			boolean endLoop = false;
+	        while (!endLoop)
 	        {
 	            Tree t1 = new Tree();
-	            System.out.println("Digite Q para sair ou uma expressão no formato. Ex. ((8+5)*(7-1)+(5*5))");
+	            System.out.println("Comandos: ");
+	            System.out.println("Expressão no formato Ex. ((8+5)*(7-1)+(5*5)) -> Calcula o resultado");
+	            System.out.println("x = Processa fórmula descrita em XML");
+	            System.out.println("y = Processa fórmula descrita em YAML");
+	            System.out.println("p = Processa fórmula descrita em Protocol Buffer");
+	            System.out.println("s = Sair");
 	            a = sc.nextLine();
-	            t1.insert(a);
-
-	            if(!a.equals("q"))
-	            {
-	            t1.show();
-	                System.out.println("\n");
-	            }else
-	            {
-	                System.out.println("Obrigado!");
+	            
+	            switch(a) {
+	            	case "s":
+	            		System.out.println("Fim!");
+	            		return;
+	            	case "y":
+	            		ParseYAML("formula.yaml");
+	            		break;
+	            	case "x":
+	            		a = ParseXML("formula.xml");
+	            		break;
+	            	case "p":
+	            		break;
+	            	default:
+		                break;
 	            }
+	            t1.insert(a);
+        		t1.show();
+        		System.out.println("\n");
 	        }
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-		 
-		 
+		}
 	    
 	}
-
+	
+	public static String ParseXML(String fileName) {
+		File xmlFile = new File(fileName);
+		
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder;
+		try {
+			builder = factory.newDocumentBuilder();
+			Document doc = builder.parse(xmlFile);
+			NodeList operandList = ((Element) doc.getElementsByTagName("operands").item(0)).getElementsByTagName("operand");
+			NodeList operationList = ((Element) doc.getElementsByTagName("operations").item(0)).getElementsByTagName("operation");
+			StringBuilder operation = new StringBuilder();
+			for(int i = 0; i < operandList.getLength(); i++) {
+				operation.append(operandList.item(i).getTextContent());
+				if (operationList.getLength() > i) {
+					operation.append(operationList.item(i).getTextContent());
+				}
+			}
+			return operation.toString();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
+	
+	public static String ParseYAML(String fileName) {
+		return "";
+	}
+	
+	public static String ParseProtocolBuffer(String fileName) {
+		return "";
+	}
 }
