@@ -1,4 +1,3 @@
-
 public class Conversion {
     private CharStack s;
     private String input;

@@ -1,4 +1,3 @@
-
 public class NodeStack {
     private Node[] a;
     private int top, m;
